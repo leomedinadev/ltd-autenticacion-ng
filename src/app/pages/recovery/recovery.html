@@ -1,0 +1,103 @@
+<div class="min-h-screen flex items-center justify-center bg-zinc-50 p-4">
+  <div class="w-full max-w-md bg-white rounded-2xl shadow-sm border border-zinc-200 p-8">
+    <div class="flex flex-col items-center mb-8">
+      <div class="w-12 h-12 bg-zinc-900 rounded-xl flex items-center justify-center mb-4">
+        <mat-icon class="text-white">lock_reset</mat-icon>
+      </div>
+      <h1 class="text-2xl font-sans font-medium text-zinc-900">Recuperar Acceso</h1>
+      <p class="text-zinc-500 text-sm mt-1">Te ayudamos a restablecer tu contraseña</p>
+    </div>
+
+    <form [formGroup]="recoveryForm" (ngSubmit)="onSubmitRecovery()" class="space-y-6">
+      <div class="space-y-2">
+        <label for="newPassword" class="text-sm font-medium text-zinc-700 block">Nueva Contraseña</label>
+        <div class="relative">
+          <mat-icon class="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400 text-sm">key</mat-icon>
+          <input
+            id="newPassword"
+            [attr.type]="$showNewPassword() ? 'text' : 'password'"
+            type="password"
+            formControlName="newPassword"
+            placeholder="••••••••"
+            class="w-full pl-10 pr-4 py-2 bg-white border border-zinc-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-900/5 focus:border-zinc-900 transition-all"
+          />
+          @if($hasNewPasswordValue()){
+            <button
+              id="new-password-visibility-toggle"
+              type="button"
+              class="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 grid place-items-center rounded-md"
+              (click)="toggleNewPasswordVisibility()"
+              [attr.aria-label]="$showNewPassword() ? 'Ocultar contraseña' : 'Mostrar contraseña'"
+              [attr.aria-pressed]="$showNewPassword()"
+            >
+              <mat-icon class="text-[18px]">
+                {{ $showNewPassword() ? 'visibility_off' : 'visibility' }}
+              </mat-icon>
+            </button>
+          }
+        </div>
+        @if (getFieldNewPassword()?.touched && getFieldNewPassword()?.invalid) {
+          @if (getFieldNewPassword()?.errors?.['required']) {
+            <p class="text-xs text-red-500">La contraseña es obligatoria</p>
+          }
+          @if(getFieldNewPassword()?.errors?.['minlength']) {
+            <p class="text-xs text-red-500">La contraseña debe tener mínimo 8 caracteres</p>
+          }
+        }
+      </div>
+
+      <div class="space-y-2">
+        <label for="confirmPassword" class="text-sm font-medium text-zinc-700 block">Confirmar Contraseña</label>
+        <div class="relative">
+          <mat-icon class="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400 text-sm">key</mat-icon>
+          <input
+            id="confirmPassword"
+            [attr.type]="$showConfirmPassword() ? 'text' : 'password'"
+            type="password"
+            formControlName="confirmPassword"
+            placeholder="••••••••"
+            class="w-full pl-10 pr-4 py-2 bg-white border border-zinc-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-900/5 focus:border-zinc-900 transition-all"
+          />
+          @if($hasConfirmPasswordValue()){
+            <button
+              id="confirm-password-visibility-toggle"
+              type="button"
+              class="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 grid place-items-center rounded-md"
+              (click)="toggleConfirmPasswordVisibility()"
+              [attr.aria-label]="$showConfirmPassword() ? 'Ocultar contraseña' : 'Mostrar contraseña'"
+              [attr.aria-pressed]="$showConfirmPassword()"
+            >
+              <mat-icon class="text-[18px]">
+                {{ $showConfirmPassword() ? 'visibility_off' : 'visibility' }}
+              </mat-icon>
+            </button>
+          }
+        </div>
+        @if (getFieldConfirmPassword()?.touched && getFieldConfirmPassword()?.invalid) {
+          @if (getFieldConfirmPassword()?.errors?.['required']) {
+            <p class="text-xs text-red-500">La contraseña es obligatoria</p>
+          }
+          @if(getFieldConfirmPassword()?.errors?.['minlength']) {
+            <p class="text-xs text-red-500">La contraseña debe tener mínimo 8 caracteres</p>
+          }
+          @if (getFieldConfirmPassword()?.errors?.['fieldMismatch']) {
+            <p class="text-xs text-red-500">Las contraseñas no coinciden</p>
+          }
+        }
+      </div>
+
+      <button
+        type="submit"
+        [disabled]="recoveryForm.invalid"
+        class="w-full bg-zinc-900 text-white font-medium py-2.5 rounded-lg hover:bg-zinc-800 focus:ring-4 focus:ring-zinc-900/10 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+      >
+        <mat-icon class="text-sm">check</mat-icon>
+        Restablecer contraseña
+      </button>
+    </form>
+
+    <div class="mt-8 pt-6 border-top border-zinc-100 text-center">
+      <p class="text-xs text-zinc-400 font-mono uppercase tracking-wider">{{textFooter}}</p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,88 @@
+<div class="min-h-screen flex items-center justify-center bg-zinc-50 p-4">
+  <div class="w-full max-w-md bg-white rounded-2xl shadow-sm border border-zinc-200 p-8">
+    <div class="flex flex-col items-center mb-8">
+      <div class="w-12 h-12 bg-zinc-900 rounded-xl flex items-center justify-center mb-4">
+        <mat-icon class="text-white">lock</mat-icon>
+      </div>
+      <h1 class="text-2xl font-sans font-medium text-zinc-900">Bienvenido de nuevo</h1>
+      <p class="text-zinc-500 text-sm mt-1">Ingresa tus credenciales para continuar</p>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-6">
+      <div class="space-y-2">
+        <label for="email" class="text-sm font-medium text-zinc-700 block">Correo Electrónico</label>
+        <div class="relative">
+          <mat-icon class="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400 text-sm">email</mat-icon>
+          <input
+            id="email"
+            type="email"
+            formControlName="email"
+            placeholder="nombre@ejemplo.com"
+            class="w-full pl-10 pr-4 py-2 bg-white border border-zinc-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-900/5 focus:border-zinc-900 transition-all"
+          />
+        </div>
+        @if (getFieldEmail()?.touched && getFieldEmail()?.errors?.['required']) {
+          <p class="text-xs text-red-500">El correo es obligatorio</p>
+        }
+        @if (getFieldEmail()?.touched && getFieldEmail()?.errors?.['email']) {
+          <p class="text-xs text-red-500">Formato de correo inválido</p>
+        }
+      </div>
+
+      <div class="space-y-2">
+        <label for="password" class="text-sm font-medium text-zinc-700 block">Contraseña</label>
+        <div class="relative">
+          <mat-icon class="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400 text-sm">key</mat-icon>
+          <input
+            id="password"
+            [attr.type]="$showPassword() ? 'text' : 'password'"
+            type="password"
+            formControlName="password"
+            placeholder="••••••••"
+            class="w-full pl-10 pr-4 py-2 bg-white border border-zinc-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-900/5 focus:border-zinc-900 transition-all"
+          />
+          @if($hasPasswordValue()){
+            <button
+              id="password-visibility-toggle"
+              type="button"
+              class="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 grid place-items-center rounded-md   "
+              (click)="togglePasswordVisibility()"
+              [attr.aria-label]="$showPassword() ? 'Ocultar contraseña' : 'Mostrar contraseña'"
+              [attr.aria-pressed]="$showPassword()"
+            >
+              <mat-icon class="text-[18px]">
+                {{ $showPassword() ? 'visibility_off' : 'visibility' }}
+              </mat-icon>
+            </button>
+          }
+        </div>
+        @if (getFieldPassword()?.touched && getFieldPassword()?.invalid) {
+          @if (getFieldPassword()?.errors?.['required']) {
+            <p class="text-xs text-red-500">La contraseña es obligatoria</p>
+          }
+          @if(getFieldPassword()?.errors?.['minlength']) {
+            <p class="text-xs text-red-500">La contraseña debe tener mínimo 8 caracteres</p>
+          }
+        }
+      </div>
+
+      <button
+        type="submit"
+        [disabled]="loginForm.invalid || $isLoading()"
+        class="w-full bg-zinc-900 text-white font-medium py-2.5 rounded-lg hover:bg-zinc-800 focus:ring-4 focus:ring-zinc-900/10 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+      >
+        @if ($isLoading()) {
+          <mat-icon class="animate-spin text-sm">sync</mat-icon>
+          Cargando...
+        } @else {
+          <mat-icon class="text-sm">login</mat-icon>
+          Iniciar Sesión
+        }
+      </button>
+    </form>
+
+    <div class="mt-8 pt-6 border-top border-zinc-100 text-center">
+      <p class="text-xs text-zinc-400 font-mono uppercase tracking-wider">{{textFooter}}</p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,3 @@
+export const CONSTANTS = {
+  TITLE_APP: 'DEMO AUTH SYSTEM V1.0'
+}

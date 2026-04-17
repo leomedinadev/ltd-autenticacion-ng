@@ -1,0 +1,87 @@
+<div class="min-h-screen bg-zinc-50">
+  <!-- Navbar -->
+  <nav class="bg-white border-b border-zinc-200 px-6 py-4">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 bg-zinc-900 rounded-lg flex items-center justify-center">
+          <mat-icon class="text-white text-sm">shield</mat-icon>
+        </div>
+        <span class="font-sans font-semibold text-zinc-900">AuthPro</span>
+      </div>
+
+      <div class="flex items-center gap-4">
+        <div class="flex flex-col items-end mr-2">
+<!--          <span class="text-sm font-medium text-zinc-900">{{ auth.user()?.name }}</span>-->
+<!--          <span class="text-xs text-zinc-500">{{ auth.user()?.email }}</span>-->
+        </div>
+        <button
+          (click)="logout()"
+          class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-zinc-700 hover:bg-zinc-100 rounded-lg transition-colors"
+        >
+          <mat-icon class="text-sm">logout</mat-icon>
+          Cerrar Sesión
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="max-w-7xl mx-auto p-8">
+    <header class="mb-8">
+      <h1 class="text-3xl font-sans font-bold text-zinc-900">Panel de Control</h1>
+      <p class="text-zinc-500 mt-2">Bienvenido a tu área segura. Aquí puedes gestionar tu cuenta.</p>
+    </header>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- Stats Card -->
+      <div class="bg-white p-6 rounded-2xl border border-zinc-200 shadow-sm">
+        <div class="flex items-center justify-between mb-4">
+          <div class="p-2 bg-emerald-50 text-emerald-600 rounded-lg">
+            <mat-icon>trending_up</mat-icon>
+          </div>
+          <span class="text-xs font-mono text-zinc-400 uppercase">Actividad</span>
+        </div>
+        <div class="text-2xl font-sans font-bold text-zinc-900">84%</div>
+        <div class="text-sm text-zinc-500 mt-1">Incremento de uso este mes</div>
+      </div>
+
+      <!-- Profile Card -->
+      <div class="bg-white p-6 rounded-2xl border border-zinc-200 shadow-sm">
+        <div class="flex items-center justify-between mb-4">
+          <div class="p-2 bg-indigo-50 text-indigo-600 rounded-lg">
+            <mat-icon>person</mat-icon>
+          </div>
+          <span class="text-xs font-mono text-zinc-400 uppercase">Perfil</span>
+        </div>
+<!--        <div class="text-lg font-sans font-bold text-zinc-900">{{ auth.user()?.name }}</div>-->
+        <div class="text-sm text-zinc-500 mt-1">Usuario Verificado</div>
+      </div>
+
+      <!-- Security Card -->
+      <div class="bg-white p-6 rounded-2xl border border-zinc-200 shadow-sm">
+        <div class="flex items-center justify-between mb-4">
+          <div class="p-2 bg-amber-50 text-amber-600 rounded-lg">
+            <mat-icon>security</mat-icon>
+          </div>
+          <span class="text-xs font-mono text-zinc-400 uppercase">Seguridad</span>
+        </div>
+        <div class="text-lg font-sans font-bold text-zinc-900">Protegido</div>
+        <div class="text-sm text-zinc-500 mt-1">Tu cuenta está segura</div>
+      </div>
+    </div>
+
+    <div class="mt-8 bg-white rounded-2xl border border-zinc-200 shadow-sm overflow-hidden">
+      <div class="px-6 py-4 border-b border-zinc-200 bg-zinc-50/50">
+        <h2 class="font-sans font-semibold text-zinc-900">Registros Recientes</h2>
+      </div>
+      <div class="p-6">
+        <div class="flex items-center justify-center h-48 border-2 border-dashed border-zinc-100 rounded-xl">
+          <div class="text-center">
+            <mat-icon class="text-zinc-300 text-4xl mb-2">folder_open</mat-icon>
+            <p class="text-zinc-400 text-sm">No hay registros recientes para mostrar</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
