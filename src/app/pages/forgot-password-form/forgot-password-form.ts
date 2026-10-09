@@ -27,7 +27,6 @@ export class ForgotPasswordForm {
 
   onSubmitForgotPassword() {
     if (this.forgotPasswordForm.valid) {
-      console.log('Forgot password:', this.forgotPasswordForm.getRawValue());
       const {email} = this.forgotPasswordForm.getRawValue();
       this.authService.recovery(email).subscribe({
         next: (data) => {
