@@ -1,59 +1,63 @@
-# LtdAutenticacionNg
+# Autenticación con Angular
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.1.5.
+Demo de un flujo completo de autenticación en **Angular 21**: inicio de sesión, registro, recuperación de contraseña y una zona privada protegida, con manejo de access token y refresh token.
 
-## Development server
+## Qué incluye
 
-To start a local development server, run:
+- **Login y registro** con formularios reactivos y validaciones propias (espacios en blanco, coincidencia de contraseñas, correo disponible).
+- **Recuperación de contraseña** en dos pasos: solicitud por correo y cambio con el token recibido.
+- **Guards**: `authGuard` protege el dashboard y `redirectGuard` saca de las páginas públicas a quien ya tiene sesión.
+- **Interceptor HTTP** que agrega el `Authorization: Bearer` solo a las peticiones marcadas y renueva el access token con el refresh token cuando expiró.
+- **Tokens en cookies** (`Secure`, `SameSite=Strict`) y validación de su expiración con `jwt-decode`.
+- Estado del usuario con **signals**.
 
-```bash
-ng serve
-```
+## Stack
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+- Angular 21 (componentes standalone, signals, carga diferida de rutas)
+- Angular Material (iconos) y Tailwind CSS 4
+- SweetAlert2 para los avisos
+- Vitest para los tests
 
-## Code scaffolding
+## Rutas
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+| Ruta | Página | Acceso |
+|---|---|---|
+| `/login` | Inicio de sesión | Público (redirige al dashboard si ya hay sesión) |
+| `/register` | Registro | Público |
+| `/forgot-password` | Solicitar recuperación | Público |
+| `/recovery?token=...` | Cambiar contraseña | Público |
+| `/dashboard` | Zona privada | Requiere sesión |
+| `/not-found` | Página no encontrada | Público |
 
-```bash
-ng generate component component-name
-```
+## Cómo ejecutar
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+Requiere Node.js 20 o superior.
 
 ```bash
-ng test
+npm install
+npm start
 ```
 
-## Running end-to-end tests
+La aplicación queda en `http://localhost:4200`.
 
-For end-to-end (e2e) testing, run:
+### API
+
+La URL del backend se define en `src/environments/` (`API_URL`). Apunta a una API de demostración de un curso (`fake-trello-api`), que puede no estar disponible. Para usar otra, cambia `API_URL`; la API debe exponer estos endpoints bajo `/api/v1/auth`:
+
+`login`, `register`, `is-available`, `recovery`, `change-password`, `refresh-token` y `profile`.
+
+Las cookies se guardan con el atributo `Secure`: los navegadores las aceptan en `localhost`, pero en otro dominio hace falta HTTPS.
+
+## Tests
 
 ```bash
-ng e2e
+npm test
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Cubren los guards, la validación de expiración de los tokens y la creación de cada página.
 
-## Additional Resources
+## Build
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+```bash
+npm run build
+```

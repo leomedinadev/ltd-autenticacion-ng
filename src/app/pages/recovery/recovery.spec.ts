@@ -1,5 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { provideRouter } from '@angular/router';
+import { provideHttpClient } from '@angular/common/http';
+
 import { Recovery } from './recovery';
 
 describe('Recovery', () => {
@@ -8,7 +11,9 @@ describe('Recovery', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Recovery]
+      imports: [Recovery],
+      // Sin token en la URL, Recovery redirige a /login: la ruta comodín evita el error de navegación
+      providers: [provideRouter([{ path: '**', children: [] }]), provideHttpClient()]
     })
     .compileComponents();
 

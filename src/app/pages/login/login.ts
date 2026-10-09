@@ -49,19 +49,16 @@ export class Login {
   onSubmit() {
     if (this.loginForm.valid) {
       this.$isLoading.set(true);
-      console.log('Form submitted:');
       const {email, password} = this.loginForm.getRawValue();
-      console.log(`Email: ${email}, Password: ${password}`);
       this.authService.login(email, password).subscribe({
-        next: (data) => {
+        next: () => {
           this.$isLoading.set(false);
-          console.log('Login successful:', data);
           this.router.navigate(['/dashboard']);
         },
         error: (error) => {
           this.$isLoading.set(false);
           console.error('Login failed:', error);
-          let message = '\'Credenciales incorrectas';
+          let message = 'Credenciales incorrectas';
           if (error.error?.name === 'EntityNotFoundError') {
             message = 'El usuario no existe';
           }

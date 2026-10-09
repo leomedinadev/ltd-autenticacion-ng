@@ -72,11 +72,9 @@ export class Recovery {
 
   onSubmitRecovery() {
     if (this.recoveryForm.valid) {
-      console.log('Recovery:', this.recoveryForm.getRawValue());
       const {newPassword} = this.recoveryForm.getRawValue();
       this.authService.changePassword(this.token, newPassword).subscribe({
-        next: (data) => {
-          console.log('Response: ', data);
+        next: () => {
           this.router.navigate(['/login']);
         },
         error: (error) => {
@@ -90,7 +88,6 @@ export class Recovery {
           } else if (Array.isArray(error.error.error)) {
             message = error.error.message;
           }
-          console.log(message);
           this.sweetAlertService.error(message);
         },
       })
